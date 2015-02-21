@@ -3,12 +3,16 @@ var ephemeris = require("../lib/ephemeris_jpl");
 
 describe('ephemeris', function() {
     describe('parseObjectData', function() {
-
-        var reference_object = {
-            radius : 12345e3,
-            mass : 543e21,
-            rotation : 987e-6
-        };
+        
+        var reference_object;
+        
+        beforeEach(function(){
+            reference_object = {
+                radius : 12345e3,
+                mass : 543e21,
+                rotation : 987e-6
+            };
+        });
     
     
         it('should parse earth data', function() {
@@ -52,6 +56,15 @@ describe('ephemeris', function() {
         it('should parse mars data', function() {
             var data =' Mean radius (km)      =  12345(+-1) \
                         Mass (10^23 kg)       =  5.43 \
+                        Sidereal rot. period  =    1.7683173779071217 hr ';
+
+            var object = ephemeris._parseObjectData(data);
+            object.should.eql(reference_object);
+        });
+
+        it('should parse phobos data', function() {
+            var data =' Radius (km)      =  12345.0 x11.1 x9.3 \
+                        Mass (10^25 kg )       =  5.43 (10^-2) \
                         Sidereal rot. period  =    1.7683173779071217 hr ';
 
             var object = ephemeris._parseObjectData(data);
