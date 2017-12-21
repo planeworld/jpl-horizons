@@ -4,8 +4,7 @@ var fs = require('fs');
 
 var ephemeris = require("./lib/ephemeris_jpl")
 var convert = require("./lib/convert");
-var xml = require("./lib/xml");
-
+var lua = require("./lib/lua");
 
 for (var object_name in ephemeris.objects) {
     if (ephemeris.objects.hasOwnProperty(object_name)) {
@@ -17,9 +16,9 @@ for (var object_name in ephemeris.objects) {
                 object.velocity= data.velocity;
             }
             
-            var xml_data = xml.object2xml(object);
-            console.log(xml_data);
-            fs.writeFile(object.name + ".xml", xml_data); 
+            var lua_data = lua.object2lua(object);
+            console.log(lua_data);
+            fs.writeFile(object.name + ".lua", lua_data); 
         });
     }
 }
